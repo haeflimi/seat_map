@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<concrete5-cif version="1.0">
+    <blocktypes>
+        <blocktype handle="seat_map" package="seat_map"/>
+    </blocktypes>
+    <attributesets>
+        <attributeset handle="seat_map" name="Seat Reservations" package="seat_map" locked="0" category="user">
+
+        </attributeset>
+    </attributesets>
+</concrete5-cif>
