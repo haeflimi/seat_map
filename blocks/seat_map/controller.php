@@ -28,13 +28,12 @@ class Controller extends BlockController
 
     public function add()
     {
-        $this->set('test','blub');
-        //$this->set('fileObject', $this->getFileObject());
+
     }
 
     public function edit()
     {
-        //$this->set('fileObject', $this->getFileObject());
+
     }
 
     public function save($args)
@@ -46,4 +45,5 @@ class Controller extends BlockController
     {
         //$this->set('fileObject', $this->getFileObject());
     }
+
 }
