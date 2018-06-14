@@ -8,11 +8,11 @@ use File;
 class Controller extends BlockController
 {
     protected $btTable = 'btSeatMap';
-    protected $btInterfaceWidth = "850";
-    protected $btInterfaceHeight = "680";
-    protected $btCacheBlockRecord = true;
-    protected $btCacheBlockOutput = true;
-    protected $btCacheBlockOutputLifetime = 21600;
+    protected $btInterfaceWidth = "1024";
+    protected $btInterfaceHeight = "768";
+    protected $btCacheBlockRecord = false;
+    protected $btCacheBlockOutput = false;
+    protected $btCacheBlockOutputLifetime = CACHE_LIFETIME;
     protected $btCacheBlockOutputOnPost = false;
     protected $btCacheBlockOutputForRegisteredUsers = false;
 
@@ -28,6 +28,7 @@ class Controller extends BlockController
 
     public function add()
     {
+        $this->set('test','blub');
         //$this->set('fileObject', $this->getFileObject());
     }
 
