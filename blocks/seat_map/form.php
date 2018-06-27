@@ -7,7 +7,7 @@ $al = Loader::helper('concrete/asset_library'); ?>
                 <?= t('Choose a .svg File to use as Seat Map') ?>
             </label>
             <div class="file-selector">
-                <?=$al->file('fID', 'fID', t('Select .svg File'));?>
+                <?=$al->file('fID', 'fID', t('Select .svg File'), $fID);?>
             </div>
             <p class="help-block">
                 <?=t('Do this for it to work')?>
@@ -17,7 +17,7 @@ $al = Loader::helper('concrete/asset_library'); ?>
             <label class="control-label">
                 <?= t('ID Prefix') ?>
             </label>
-            <?=$form->text('prefix', '') ?>
+            <?=$form->text('prefix', $prefix) ?>
             <p class="help-block">
                 <?=t('Define a unique prefix that is used to identify Seat representations within in the Seat Map.')?>
             </p>

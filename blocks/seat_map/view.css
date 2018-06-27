@@ -1,0 +1,12 @@
+.seat-map-wrapper svg .seat *{
+    fill: green;
+    cursor: pointer;
+}
+.seat-map-wrapper svg .seat.taken *{
+    fill: red;
+    cursor: pointer;
+}
+.seat-map-wrapper svg .seat.taken.my *{
+    fill: orange;
+    cursor: pointer;
+}
