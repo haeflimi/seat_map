@@ -7,7 +7,9 @@
         </field>
         <field name="fID" type="I">
         </field>
-        <field name="prefix" type="C">
+        <field name="gID" type="I">
+        </field>
+        <field name="class" type="C">
         </field>
     </table>
 </schema>

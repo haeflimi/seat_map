@@ -15,11 +15,20 @@ $al = Loader::helper('concrete/asset_library'); ?>
         </div>
         <div class="form-group">
             <label class="control-label">
-                <?= t('ID Prefix') ?>
+                <?= t('Seat Object Class') ?>
             </label>
-            <?=$form->text('prefix', $prefix) ?>
+            <?=$form->text('class', $class) ?>
             <p class="help-block">
-                <?=t('Define a unique prefix that is used to identify Seat representations within in the Seat Map.')?>
+                <?=t('Define a unique class name to identify .svg Objects representing seats.')?>
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <?= t('Allowed Group') ?>
+            </label>
+            <?=$form->select('gID', $allGroups, $gID);?>
+            <p class="help-block">
+                <?=t('Only users in this Group are allowed to claim a Seat.')?>
             </p>
         </div>
     </fieldset>
