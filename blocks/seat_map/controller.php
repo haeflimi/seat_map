@@ -11,6 +11,7 @@ use Concrete\Core\Attribute\StandardSetManager;
 use Concrete\Core\Attribute\SetFactory;
 use UserList;
 use User;
+use Group;
 
 class Controller extends BlockController
 {
@@ -41,6 +42,16 @@ class Controller extends BlockController
     public function edit()
     {
         $this->prepFormData();
+    }
+
+    public function action_claim_seat()
+    {
+        $currentUser = new User();
+        $ui = $currentUser->getUserInfoObject();
+        if(!empty($newSeatId = $this->post('claim_seat_id')) && $this->reservationAllowed()){
+            $ui->setAttribute($this->class.'_reservation', $newSeatId);
+        }
+        $this->view();
     }
 
     public function save($args)
@@ -80,6 +91,7 @@ class Controller extends BlockController
         $f = File::getByID($this->fID);
         $svgMap = $f->getFileContents();
         $reservations = array();
+        $currentUser = new User();
         // Check if the Attribute for the map exists
         if(!empty(UserKey::getByHandle($this->class.'_reservation'))){
             // Filter the User List for that attribute
@@ -89,15 +101,16 @@ class Controller extends BlockController
                 $reservations[$u->getAttribute($this->class.'_reservation')] = $u;
             }
             // Check the current User for that attribute to determine users seat
-            $u = new User();
-            if($u->isLoggedIn()){
-                $ui = $u->getUserInfoObject();
+            if($currentUser->isLoggedIn()){
+                $ui = $currentUser->getUserInfoObject();
                 $mySeat = $ui->getAttribute($this->class.'_reservation');
                 $this->set('mySeat', $mySeat);
             }
         }
+
         $this->set('reservations', $reservations);
         $this->set('svgMap', $svgMap);
+        $this->set('allowReservation', $this->reservationAllowed());
         $this->set('class', $this->class);
         $this->set('fID', $this->fID);
         $this->set('gID', $this->gID);
@@ -116,5 +129,18 @@ class Controller extends BlockController
         $this->set('gID', $this->gID);
         $this->set('fID', $this->fID);
         $this->set('class', $this->class);
+    }
+
+    private function reservationAllowed()
+    {
+        $currentUser = new User();
+        $group = Group::getByID($this->gID);
+        $ui = $currentUser->getUserInfoObject();
+        if( $currentUser->isLoggedIn() &&
+            ($this->gID == 0 || $currentUser->inGroup($group))){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
