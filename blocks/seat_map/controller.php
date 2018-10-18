@@ -97,6 +97,7 @@ class Controller extends BlockController
             // Filter the User List for that attribute
             $ul = new UserList;
             $ul->filterByAttribute($this->class.'_reservation', '', '!=');
+            $ul->sortBy('uName', 'ASC');
             foreach($ul->getResults() as $u){
                 $reservations[$u->getAttribute($this->class.'_reservation')] = $u;
             }

@@ -11,7 +11,7 @@
                 <?php if($key == $mySeat): ?>
                     <p><?=t('This Seat is your Seat')?></p>
                 <?php else: ?>
-                    <p><?=t('This Seat is taken by:').' '.$u->getUserName()?></p>
+                    <p><?=t('This Seat is taken by:').' <a class="btn btn-outline-primary btn-round" type="button" data-toggle="modal" data-target="#modal" data-source="/members/profile/'.$u->getUserID().'"><i class="fa fa-user"></i> '.$u->getUserName().'</a>'?></p>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
