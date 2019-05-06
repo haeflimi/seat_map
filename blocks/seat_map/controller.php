@@ -20,7 +20,7 @@ class Controller extends BlockController
     protected $btInterfaceHeight = "768";
     protected $btCacheBlockRecord = false;
     protected $btCacheBlockOutput = false;
-    protected $btCacheBlockOutputLifetime = CACHE_LIFETIME;
+    protected $btCacheBlockOutputLifetime = 0;
     protected $btCacheBlockOutputOnPost = false;
     protected $btCacheBlockOutputForRegisteredUsers = false;
 
@@ -58,6 +58,8 @@ class Controller extends BlockController
     {
         $pkg = Package::getByHandle('seat_map');
         $em = \ORM::entityManager();
+        if(empty($args['showList']))$args['showList']=false;
+        if(empty($args['showSearch']))$args['showSearch']=false;
         parent::save($args);
         if($args['class']){
             $service = $this->app->make('Concrete\Core\Attribute\Category\CategoryService');
@@ -65,20 +67,22 @@ class Controller extends BlockController
             $category = $categoryEntity->getController();
             $akHandle = $args['class'].'_reservation';
             $ak = $category->getByHandle($akHandle);
-            $setHandle = 'seat_map_reservations';
-            $sf = new SetFactory($em);
-            $sm = new StandardSetManager($categoryEntity, $em);
-            $set = $sf->getByHandle($setHandle);
-            if(!is_object($set)){
-                $sm->addSet($setHandle, t('Seat Map Reservations'), $pkg);
+            if($ak){
+                $setHandle = 'seat_map_reservations';
+                $sf = new SetFactory($em);
+                $sm = new StandardSetManager($categoryEntity, $em);
                 $set = $sf->getByHandle($setHandle);
-            }
-            if(!is_object($ak)){
-                $ak = new UserKey();
-                $ak->setAttributeKeyHandle($akHandle);
-                $ak->setAttributeKeyName(t('Seat Reservation Attribute for Map width Class: "%s"',$akHandle));
-                $ak = $category->add('text', $ak, null, $pkg);
-                $sm->addKey($set, $ak);
+                if(!is_object($set)){
+                    $sm->addSet($setHandle, t('Seat Map Reservations'), $pkg);
+                    $set = $sf->getByHandle($setHandle);
+                }
+                if(!is_object($ak)){
+                    $ak = new UserKey();
+                    $ak->setAttributeKeyHandle($akHandle);
+                    $ak->setAttributeKeyName(t('Seat Reservation Attribute for Map width Class: "%s"',$akHandle));
+                    $ak = $category->add('text', $ak, null, $pkg);
+                    $sm->addKey($set, $ak);
+                }
             }
         }
     }
@@ -87,16 +91,18 @@ class Controller extends BlockController
     {
         $this->requireAsset('javascript', 'bootstrap/tooltip');
         $this->requireAsset('javascript', 'bootstrap/popover');
+        $this->requireAsset('selectize');
         // Load the SVG File content
         $f = File::getByID($this->fID);
         $svgMap = $f->getFileContents();
         $reservations = array();
         $currentUser = new User();
+        $g = Group::getByID($this->gID);
         // Check if the Attribute for the map exists
         if(!empty(UserKey::getByHandle($this->class.'_reservation'))){
             // Filter the User List for that attribute
             $ul = new UserList;
-            $ul->filterByAttribute($this->class.'_reservation', '', '!=');
+            $ul->filterByGroup($g, true);
             $ul->sortBy('uName', 'ASC');
             foreach($ul->getResults() as $u){
                 $reservations[$u->getAttribute($this->class.'_reservation')] = $u;
@@ -112,6 +118,8 @@ class Controller extends BlockController
         $this->set('reservations', $reservations);
         $this->set('svgMap', $svgMap);
         $this->set('allowReservation', $this->reservationAllowed());
+        $this->set('showSearch', $this->showSearch);
+        $this->set('showList', $this->showList);
         $this->set('class', $this->class);
         $this->set('fID', $this->fID);
         $this->set('gID', $this->gID);
@@ -127,6 +135,8 @@ class Controller extends BlockController
             $allGroups[$group->getGroupID()] = $group->getGroupPath();
         }
         $this->set('allGroups', $allGroups);
+        $this->set('showSearch', $this->showSearch);
+        $this->set('showList', $this->showList);
         $this->set('gID', $this->gID);
         $this->set('fID', $this->fID);
         $this->set('class', $this->class);

@@ -9,6 +9,10 @@
         </field>
         <field name="gID" type="I">
         </field>
+        <field name="showSearch" type="I">
+        </field>
+        <field name="showList" type="I">
+        </field>
         <field name="class" type="C">
         </field>
     </table>

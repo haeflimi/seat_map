@@ -28,7 +28,26 @@ $al = Loader::helper('concrete/asset_library'); ?>
             </label>
             <?=$form->select('gID', $allGroups, $gID);?>
             <p class="help-block">
-                <?=t('Only users in this Group are allowed to claim a Seat.')?>
+                <?=t('Only users in this Group are allowed to claim a Seat and Searchable in the Search Field')?>
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <?=$form->checkbox('showSearch', '1', ($showSearch == '1')?1:0 );?>
+                <?= t('Show Search') ?>
+
+            </label>
+            <p class="help-block">
+                <?=t('Display a Search field that highlights results in the Map and on the List.')?>
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <?=$form->checkbox('showList', '1', ($showList == '1')?1:0 );?>
+                <?= t('Show List') ?>
+            </label>
+            <p class="help-block">
+                <?=t('Display a Participant list alongside the Seatmap.')?>
             </p>
         </div>
     </fieldset>
