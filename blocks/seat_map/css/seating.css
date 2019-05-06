@@ -36,19 +36,19 @@
     fill: #59f673 !important;
     cursor: pointer;
 }
-.seat-map-wrapper svg g.taken ellipse,.seat-map-wrapper svg g.taken circle {
+.seat-map-wrapper svg .taken {
     fill: #b83535 !important;
     cursor: default;
 }
-.seat-map-wrapper svg g.temp ellipse,.seat-map-wrapper svg g.temp circle {
+.seat-map-wrapper svg .temp {
     fill: #ff9b0d !important;
     cursor: pointer;
 }
-.seat-map-wrapper svg g.my ellipse,.seat-map-wrapper svg g.my circle {
+.seat-map-wrapper svg .my {
     fill: #7c35b8 !important;
     cursor: default;
 }
-.seat-map-wrapper svg g.selected ellipse,.seat-map-wrapper svg g.selected circle {
+.seat-map-wrapper svg .selected {
     fill: #e6db32 !important;
     cursor: default;
 }
