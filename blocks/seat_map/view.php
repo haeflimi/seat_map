@@ -1,6 +1,5 @@
 
 <div id="seat-map-<?=$bID?>" class="seat-map-wrapper">
-    <h2>Sitzplan:</h2>
     <?php echo $svgMap ?>
 
     <div id="seat-map-reservations" hidden data-class="<?=$class?>">

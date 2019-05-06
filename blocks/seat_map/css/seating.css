@@ -1,0 +1,57 @@
+
+/* Sitzplan */
+.seat-map-wrapper .info-box {
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.seat-map-wrapper .info-box .user {
+    margin-bottom: 5px;
+}
+
+.seat-map-wrapper a.tag{
+    display: inline-block;
+    margin: 3px 2px;
+    padding: 5px 9px;
+    border: 1px solid #d3d3d3;
+    color: #acacac;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 200;
+    border-color: #222;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.seat-map-wrapper a.tag:hover {
+    background-color: DarkTurquoise;
+}
+.seat-map-wrapper a.tag.active {
+    background-color: DarkTurquoise;
+}
+.seat-map-wrapper svg {
+    width: 100% !important;
+}
+.seat-map-wrapper svg g ellipse,.seat-map-wrapper svg g circle {
+    fill: #59f673 !important;
+    cursor: pointer;
+}
+.seat-map-wrapper svg g.taken ellipse,.seat-map-wrapper svg g.taken circle {
+    fill: #b83535 !important;
+    cursor: default;
+}
+.seat-map-wrapper svg g.temp ellipse,.seat-map-wrapper svg g.temp circle {
+    fill: #ff9b0d !important;
+    cursor: pointer;
+}
+.seat-map-wrapper svg g.my ellipse,.seat-map-wrapper svg g.my circle {
+    fill: #7c35b8 !important;
+    cursor: default;
+}
+.seat-map-wrapper svg g.selected ellipse,.seat-map-wrapper svg g.selected circle {
+    fill: #e6db32 !important;
+    cursor: default;
+}
+.seat-map-wrapper svg text, #seatingForm svg tspan {
+    font-family: "raleway" !important;
+}
