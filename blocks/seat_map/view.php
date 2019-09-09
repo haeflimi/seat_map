@@ -43,9 +43,11 @@
     <div id="seat-map-empty-seat-form" hidden>
         <p><?=t('This Seat is available.')?></p>
         <?php if($allowReservation):?>
-        <form action="<?=$this->action('claim_seat')?>" method="post">
+        <form action="" method="post" id="claimSeatForm">
             <input id="seat-map-claim-seat" name="claim_seat_id" type="hidden" value=""/>
-            <button class="btn btn-default" data-seat=""><?=t('Claim now!')?></button>
+            <input id="seat-map-handle" name="event_class" type="hidden" value="<?=$class?>"/>
+            <input type="hidden" name="ccm_token" value="<?=Core::make('token')->generate('claim_seat');?>"/>
+            <button class="btn btn-default seat-map-claim"><?=t('Claim now!')?></button>
         </form>
         <?php endif; ?>
     </div>

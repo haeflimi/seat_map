@@ -36,19 +36,19 @@
     fill: #59f673 !important;
     cursor: pointer;
 }
-.seat-map-wrapper svg .taken {
+.seat-map-wrapper svg .taken * {
     fill: #b83535 !important;
     cursor: default;
 }
-.seat-map-wrapper svg .temp {
+.seat-map-wrapper svg .temp * {
     fill: #ff9b0d !important;
     cursor: pointer;
 }
-.seat-map-wrapper svg .my {
+.seat-map-wrapper svg .my * {
     fill: #7c35b8 !important;
     cursor: default;
 }
-.seat-map-wrapper svg .selected {
+.seat-map-wrapper svg .selected * {
     fill: #e6db32 !important;
     cursor: default;
 }

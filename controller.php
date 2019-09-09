@@ -3,6 +3,7 @@ namespace Concrete\Package\SeatMap;
 
 use Package,
     Concrete\Core\Backup\ContentImporter,
+    Route,
     Core,
     Config,
     Events;
@@ -25,7 +26,9 @@ class Controller extends Package
 
     public function on_start()
     {
-
+        Route::registerMultiple(array(
+            '/ccm/seat_map/claim_seat' => array('\Concrete\Package\SeatMap\Block\SeatMap\Controller::claim_seat')
+        ));
     }
 
     public function install()

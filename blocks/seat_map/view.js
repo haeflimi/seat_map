@@ -25,15 +25,34 @@ $(function() {
                     html: true,
                     placement: 'right',
                     trigger:'click',
+                    title: title,
                     content: function(){
                         $('#seat-map-empty-seat-form #seat-map-claim-seat').val(seat_id);
-                        return $('#seat-map-empty-seat-form').html()
-                    },
-                    title: title,
-                });
+                        return $('#seat-map-empty-seat-form').html();
+                    }
+                }).on('shown.bs.popover', function(shownEvent) {
+
+                    $('.seat-map-claim').click( function( event ){
+                        event.preventDefault();
+                        $.ajax({
+                            type: "post",
+                            url: '/ccm/seat_map/claim_seat',
+                            data: $('#claimSeatForm').serialize(),
+                            success: function (data) {
+                                svgElement.popover('dispose');
+                                activateNextStep();
+                            },
+                            error: function () {
+                                console.warn("error");
+                            }
+                        });
+                    });
+                });;
+
             }
         });
     }
+
 
 
     $('#seat-map-filter').selectize({

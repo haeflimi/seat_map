@@ -44,14 +44,15 @@ class Controller extends BlockController
         $this->prepFormData();
     }
 
-    public function action_claim_seat()
+    public function claim_seat()
     {
         $currentUser = new User();
         $ui = $currentUser->getUserInfoObject();
-        if(!empty($newSeatId = $this->post('claim_seat_id')) && $this->reservationAllowed()){
-            $ui->setAttribute($this->class.'_reservation', $newSeatId);
+        $this->validateAjax('claim_seat');
+        if(!empty($newSeatId = $this->post('claim_seat_id')) && $this->reservationAllowed() && $this->post('event_class')){
+            $ui->setAttribute($this->post('event_class').'_reservation', $newSeatId);
         }
-        $this->view();
+        die;
     }
 
     public function save($args)
@@ -153,5 +154,16 @@ class Controller extends BlockController
         } else {
             return false;
         }
+    }
+
+    public function validateAjax($token_string){
+        $u = new User();
+        $token = \Core::make("token");
+        if(!$u->isRegistered()){
+            throw Exception('Invalid Request, user must be logged in.');
+        } elseif(!$token->validate($token_string)){
+            throw Exception('Invalid Request, token must be valid.');
+        }
+        return true;
     }
 }
