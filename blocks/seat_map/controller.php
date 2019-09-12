@@ -51,6 +51,7 @@ class Controller extends BlockController
         $this->validateAjax('claim_seat');
         if(!empty($newSeatId = $this->post('claim_seat_id')) && $this->reservationAllowed() && $this->post('event_class')){
             $ui->setAttribute($this->post('event_class').'_reservation', $newSeatId);
+            echo t('Seat %s was claimed for you.',[$newSeatId]);
         }
         die;
     }

@@ -38,13 +38,21 @@ $(function() {
 
                     $('.seat-map-claim').click( function( event ){
                         event.preventDefault();
+                        if($('#claimSeatForm-'+seat_id).length){
+                            var formData = $('#claimSeatForm-'+seat_id);
+                        } else {
+                            var formData = $('#claimSeatForm');
+                        }
+
                         $.ajax({
                             type: "post",
                             url: '/ccm/seat_map/claim_seat',
-                            data: $('#claimSeatForm').serialize(),
+                            data: formData.serialize(),
                             success: function (data) {
-                                svgElement.popover('dispose');
-                                activateNextStep();
+                                svgElement.popover('hide');
+                                svgElement.removeClass('temp');
+                                $('.seat-map-wrapper svg').find('.my').removeClass('my');
+                                svgElement.addClass('my');
                             },
                             error: function () {
                                 console.warn("error");
