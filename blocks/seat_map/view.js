@@ -9,8 +9,12 @@ $(function() {
             if(infoElement.length > 0){
                 if(infoElement.data('myseat')){
                     svgElement.addClass('my');
+                } else if(infoElement.data('temporary')){
+                    svgElement.addClass('temp');
+                } else {
+                    svgElement.addClass('taken');
                 }
-                svgElement.addClass('taken');
+
                 svgElement.popover({
                     container: 'body',
                     html: true,

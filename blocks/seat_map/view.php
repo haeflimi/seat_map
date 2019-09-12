@@ -9,9 +9,12 @@
                  data-seat="<?=$key?>"
                  data-title="<?=t('Seat')?>: <b><?=strtoupper($key)?></b>"
                  data-svgelement="<?=$key?>"
+                 data-temporary="<?=in_array($key,$temporary)?true:false;?>"
                  data-myseat="<?=($key == $mySeat)?true:false;?>">
                 <?php if($key == $mySeat): ?>
                     <p><?=t('This Seat is your Seat')?></p>
+                <?php elseif(in_array($key,$temporary)): ?>
+                    <p><?=t('This Seat is reserved for a friend of ').$u->getUserName()?></p>
                 <?php else: ?>
                     <p><?=t('This Seat is taken by:').' <a class="btn btn-outline-primary btn-round" type="button" data-toggle="modal" data-target="#modal" data-source="/members/profile/'.$u->getUserID().'"><i class="fa fa-user"></i> '.$u->getUserName().'</a>'?></p>
                 <?php endif; ?>
@@ -34,7 +37,8 @@
     <?php if($showList): ?>
     <div class="seat-map-list">
         <h2>Teilnehmerliste:</h2>
-        <?php foreach($reservations as $key => $u):?>
+        <?php foreach($reservations as $key => $u):
+            if(in_array($key,$temporary))continue;?>
             <?=View::element('participant-list', array('user' => $u), 'turicane_theme');?></p>
         <?php endforeach; ?>
     </div>
@@ -62,6 +66,10 @@
         }
         .seat-map-wrapper svg .<?=$class?>.my *{
             fill: orange;
+            cursor: pointer;
+        }
+        .seat-map-wrapper svg .<?=$class?>.temporary *{
+            fill: pink;
             cursor: pointer;
         }
     </style>
