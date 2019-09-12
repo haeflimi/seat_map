@@ -15,6 +15,12 @@
                     <p><?=t('This Seat is your Seat')?></p>
                 <?php elseif(in_array($key,$temporary)): ?>
                     <p><?=t('This Seat is reserved for a friend of ').$u->getUserName()?></p>
+                    <form action="" method="post" id="claimSeatForm">
+                        <input id="seat-map-claim-seat" name="claim_seat_id" type="hidden" value=""/>
+                        <input id="seat-map-handle" name="event_class" type="hidden" value="<?=$class?>"/>
+                        <input type="hidden" name="ccm_token" value="<?=Core::make('token')->generate('claim_seat');?>"/>
+                        <button class="btn btn-default seat-map-claim"><?=t('Claim now if you are said friend!')?></button>
+                    </form>
                 <?php else: ?>
                     <p><?=t('This Seat is taken by:').' <a class="btn btn-outline-primary btn-round" type="button" data-toggle="modal" data-target="#modal" data-source="/members/profile/'.$u->getUserID().'"><i class="fa fa-user"></i> '.$u->getUserName().'</a>'?></p>
                 <?php endif; ?>
