@@ -43,7 +43,7 @@
     <?php if($showList): ?>
     <div class="seat-map-list">
         <h2>Teilnehmerliste:</h2>
-        <?php foreach($reservations as $key => $u):
+        <?php foreach($filterOptions as $key => $u):
             if(in_array($key,$temporary))continue;?>
             <?=View::element('participant-list', array('user' => $u), 'turicane_theme');?></p>
         <?php endforeach; ?>

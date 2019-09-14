@@ -99,6 +99,7 @@ class Controller extends BlockController
         $svgMap = $f->getFileContents();
         $reservations = array();
         $temporary = array();
+        $filterOptions = array();
         $currentUser = new User();
         $g = Group::getByID($this->gID);
         // Check if the Attribute for the map exists
@@ -109,6 +110,7 @@ class Controller extends BlockController
             $ul->sortBy('uName', 'ASC');
             foreach($ul->getResults() as $u){
                 $reservations[$u->getAttribute($this->class.'_reservation')] = $u;
+                $filterOptions[$u->getAttribute($this->class.'_reservation')] = $u;
                 if($friends = $u->getAttribute($this->class.'_reservation_friends')) {
                     $friends = trim($friends);
                     if(strpos($friends,',') === false && is_numeric($friends) && !array_key_exists($friends,$reservations)){
@@ -134,6 +136,7 @@ class Controller extends BlockController
         }
 
         $this->set('reservations', $reservations);
+        $this->set('filterOptions', $filterOptions);
         $this->set('temporary', $temporary);
         $this->set('svgMap', $svgMap);
         $this->set('allowReservation', $this->reservationAllowed());
