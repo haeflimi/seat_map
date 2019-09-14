@@ -33,7 +33,7 @@
     <div class="form-group">
         <select id="seat-map-filter" class="form-control">
                 <option value="">Auswählen</option>
-            <?php foreach($reservations as $key => $u): ?>
+            <?php foreach($participantList as $key => $u): ?>
                 <option value="<?=$key?>"><?=$u->getUserName()?></option>
             <?php endforeach; ?>
         </select>
@@ -43,7 +43,7 @@
     <?php if($showList): ?>
     <div class="seat-map-list">
         <h2>Teilnehmerliste:</h2>
-        <?php foreach($filterOptions as $key => $u):
+        <?php foreach($participantList as $key => $u):
             if(in_array($key,$temporary))continue;?>
             <?=View::element('participant-list', array('user' => $u), 'turicane_theme');?></p>
         <?php endforeach; ?>
