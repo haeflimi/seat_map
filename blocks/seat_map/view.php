@@ -32,7 +32,7 @@
     <h2>Filter:</h2>
     <div class="form-group">
         <select id="seat-map-filter" class="form-control">
-                <option value="">Auswählen</option>
+                <option value="" selected>Auswählen</option>
             <?php foreach($participantList as $key => $u): ?>
                 <option value="<?=$key?>"><?=$u->getUserName()?></option>
             <?php endforeach; ?>

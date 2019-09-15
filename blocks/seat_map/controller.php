@@ -113,13 +113,13 @@ class Controller extends BlockController
                 $participantList[$u->getAttribute($this->class.'_reservation')] = $u;
                 if($friends = $u->getAttribute($this->class.'_reservation_friends')) {
                     $friends = trim($friends);
-                    if(strpos($friends,',') === false && is_numeric($friends) && !array_key_exists($friends,$reservations)){
+                    if(strpos($friends,',') === false && !array_key_exists($friends,$reservations)){
                         $reservations[$friends] = $u;
                         $temporary[] = $friends;
                     } else {
                         $friendsArr = explode(',',$friends);
                         foreach($friendsArr as $cf){
-                            if(is_numeric($cf) && !array_key_exists($cf,$reservations)){
+                            if(!array_key_exists($cf,$reservations)){
                                 $reservations[$cf] = $u;
                                 $temporary[] = $cf;
                             }
