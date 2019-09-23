@@ -9,6 +9,7 @@ use Package;
 use Concrete\Core\Attribute\Key\UserKey;
 use Concrete\Core\Attribute\StandardSetManager;
 use Concrete\Core\Attribute\SetFactory;
+use Core;
 use UserList;
 use User;
 use Group;
@@ -49,10 +50,37 @@ class Controller extends BlockController
         $currentUser = new User();
         $ui = $currentUser->getUserInfoObject();
         $this->validateAjax('claim_seat');
-        if(!empty($newSeatId = $this->post('claim_seat_id')) && $this->reservationAllowed() && $this->post('event_class')){
+        if($this->post('invite' == 1) &&
+            !empty($newSeatId = $this->post('claim_seat_id')) &&
+            !empty($this->post('invitee_user_id'))
+        ) {
+            $mail = Core::make('mail');
+            $invitedUser = User::getByUserID($this->post('invitee_user_id'));
+            $User = User::getByUserID($this->post('user_id'));
+            // Add to Reservation Owners Group and set Seat Attribute
+            $reservationGroup = Group::getByName('Reservation Owners');
+            $invitedUser->enterGroup($reservationGroup);
+            $invitedUserIO = $invitedUser->getUserInfoObject();
+            $invitedUserIO->setAttribute($this->post('event_class').'_reservation', $newSeatId);
+            // Prepare and Send eMail
+            $mail->addParameter('uName', $invitedUser->getUserName());
+            $mail->addParameter('inviteeName', $User->getUserName());
+            $mail->addParameter('seatNumber', $newSeatId);
+            $mail->addParameter('signupPageURL', 'https://www.turicane.ch/turicane-22');
+            $mail->load('seat_map_claim_invite', 'seat_map');
+            $mail->from('info@turicane.ch', 'Turicane Game Club');
+            $mail->to($invitedUserIO->getUserEmail());
+            $mail->sendMail();
+            echo t('Invite has been sent to: %s',$invitedUserIO->getUserEmail());
+        } elseif(
+            !empty($newSeatId = $this->post('claim_seat_id')) &&
+            $this->reservationAllowed() &&
+            $this->post('event_class')
+        ){
             $ui->setAttribute($this->post('event_class').'_reservation', $newSeatId);
             echo t('Seat %s was claimed for you.',[$newSeatId]);
         }
+
         die;
     }
 
