@@ -38,8 +38,8 @@ $ul->sortByUserName();
                                 <?php endforeach; ?>
                             </select>
                             <p class="text-muted"><?=t('Invite another User to claim this seat.')?></p>
-                            <div class="invite-response alert" hidden></div>
-                            <button class="btn btn-default seat-map-claim" data-seat-id="<?=$key?>"><?=t('Invite')?></button>
+                            <div class="invite-response alert hidden"></div>
+                            <button class="btn btn-default seat-map-invite" data-seat-id="<?=$key?>"><?=t('Invite')?></button>
                         </div>
 
                         <?php endif; ?>

@@ -45,12 +45,12 @@ class Controller extends BlockController
         $this->prepFormData();
     }
 
-    public function claim_seat()
+    public function claim_seat($action)
     {
         $currentUser = new User();
         $ui = $currentUser->getUserInfoObject();
         $this->validateAjax('claim_seat');
-        if($this->post('invite' == 1) &&
+        if($action == 'invite' &&
             !empty($newSeatId = $this->post('claim_seat_id')) &&
             !empty($this->post('invitee_user_id'))
         ) {
@@ -71,17 +71,18 @@ class Controller extends BlockController
             $mail->from('info@turicane.ch', 'Turicane Game Club');
             $mail->to($invitedUserIO->getUserEmail());
             $mail->sendMail();
-            echo t('Invite has been sent to: %s',$invitedUserIO->getUserEmail());
+            return t('Invite has been sent to: %s',$invitedUserIO->getUserEmail());
         } elseif(
+            $action == 'claim' &&
             !empty($newSeatId = $this->post('claim_seat_id')) &&
             $this->reservationAllowed() &&
             $this->post('event_class')
         ){
             $ui->setAttribute($this->post('event_class').'_reservation', $newSeatId);
-            echo t('Seat %s was claimed for you.',[$newSeatId]);
+            return t('Seat %s was claimed for you.',[$newSeatId]);
         }
 
-        die;
+        return t('Something went wrong');
     }
 
     public function save($args)

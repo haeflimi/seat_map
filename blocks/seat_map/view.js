@@ -84,24 +84,35 @@ function initInviteSelect(){
 }
 
 function initClaimButton(svgElement){
-    $('.seat-map-claim').click( function( event ){
+    $('.seat-map-claim, .seat-map-invite').click( function( event ){
         event.preventDefault();
         var seat_id = $(svgElement).attr('id');
+
         if($('#claimSeatForm-'+seat_id).length){
             var formData = $('#claimSeatForm-'+seat_id);
         } else {
             var formData = $('#claimSeatForm');
         }
 
+        if($(event.target).hasClass('seat-map-claim')){
+            var action = 'claim';
+        } else {
+            var action = 'invite';
+        }
+        console.log({formData,action});
         $.ajax({
             type: "post",
-            url: '/ccm/seat_map/claim_seat',
+            url: '/ccm/seat_map/claim_seat/'+action,
             data: formData.serialize(),
             success: function (data) {
-                svgElement.popover('hide');
                 svgElement.removeClass('temp');
                 $('.seat-map-wrapper svg').find('.my').removeClass('my');
                 svgElement.addClass('my');
+                $('.invite-response').html(data).addClass('alert-success').removeClass('hidden');
+                setTimeout(function(){
+                    //do something special
+                    svgElement.popover('hide');
+                }, 3000);
             },
             error: function () {
                 console.warn("error");

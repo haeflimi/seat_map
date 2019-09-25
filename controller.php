@@ -27,7 +27,7 @@ class Controller extends Package
     public function on_start()
     {
         Route::registerMultiple(array(
-            '/ccm/seat_map/claim_seat' => array('\Concrete\Package\SeatMap\Block\SeatMap\Controller::claim_seat')
+            '/ccm/seat_map/claim_seat/{action}' => array('\Concrete\Package\SeatMap\Block\SeatMap\Controller::claim_seat')
         ));
     }
 
