@@ -138,22 +138,27 @@ class Controller extends BlockController
             $ul->filterByGroup($g, true);
             $ul->sortBy('uName', 'ASC');
             foreach($ul->getResults() as $u){
-                $reservations[$u->getAttribute($this->class.'_reservation')] = $u;
-                $participantList[$u->getAttribute($this->class.'_reservation')] = $u;
                 if($friends = $u->getAttribute($this->class.'_reservation_friends')) {
                     $friends = trim($friends);
                     if(strpos($friends,',') === false && !array_key_exists($friends,$reservations)){
                         $reservations[$friends] = $u;
-                        $temporary[] = $friends;
+                        $temporary[$friends] = $friends;
                     } else {
                         $friendsArr = explode(',',$friends);
                         foreach($friendsArr as $cf){
                             if(!array_key_exists($cf,$reservations)){
                                 $reservations[$cf] = $u;
-                                $temporary[] = $cf;
+                                $temporary[$cf] = $cf;
                             }
                         }
                     }
+                }
+            }
+            foreach($ul->getResults() as $u){
+                if($u->getAttribute($this->class.'_reservation')){
+                    $reservations[$u->getAttribute($this->class.'_reservation')] = $u;
+                    $participantList[$u->getAttribute($this->class.'_reservation')] = $u;
+                    unset($temporary[$u->getAttribute($this->class.'_reservation')]);
                 }
             }
             // Check the current User for that attribute to determine users seat
